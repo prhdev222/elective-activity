@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>กิจกรรม — สาขาวิชาโลหิตวิทยา</title>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Sarabun', sans-serif; background: #f8f7f4; color: #1a1a1a; min-height: 100vh; }
+  .header {
+    background: #fff;
+    border-bottom: 1px solid #e5e3dc;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .header-icon {
+    width: 42px; height: 42px;
+    background: #e8f4ee;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .header h1 { font-size: 17px; font-weight: 600; }
+  .header p { font-size: 12px; color: #888; margin-top: 1px; }
+  .main { max-width: 700px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  .search-box {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .search-box input {
+    flex: 1; border: none; outline: none;
+    font-size: 15px; font-family: 'Sarabun', sans-serif;
+    background: transparent; color: #1a1a1a;
+  }
+  .search-box input::placeholder { color: #bbb; }
+  .search-btn {
+    background: #1d6a45; color: #fff; border: none;
+    border-radius: 8px; padding: 8px 18px;
+    font-size: 14px; font-family: 'Sarabun', sans-serif;
+    cursor: pointer; white-space: nowrap;
+  }
+  .search-btn:hover { background: #155234; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; }
+  .chip {
+    background: #fff; border: 1px solid #ddd;
+    border-radius: 20px; padding: 6px 14px;
+    font-size: 13px; font-family: 'Sarabun', sans-serif;
+    color: #555; cursor: pointer; transition: all 0.15s;
+  }
+  .chip:hover { background: #e8f4ee; border-color: #1d6a45; color: #1d6a45; }
+  .results { display: flex; flex-direction: column; gap: 12px; }
+  .card {
+    background: #fff; border: 1px solid #e5e3dc;
+    border-radius: 12px; padding: 1rem 1.25rem;
+    border-left: 4px solid #1d6a45;
+  }
+  .card-tag {
+    display: inline-block;
+    background: #e8f4ee; color: #1d6a45;
+    font-size: 11px; font-weight: 600;
+    border-radius: 6px; padding: 3px 10px;
+    margin-bottom: 10px; letter-spacing: 0.02em;
+  }
+  .card-answer {
+    font-size: 14.5px; line-height: 1.85;
+    color: #2a2a2a; white-space: pre-wrap;
+  }
+  mark { background: #fef3c7; color: #7c5a00; border-radius: 3px; padding: 0 2px; }
+  .empty {
+    text-align: center; padding: 2.5rem 1rem;
+    color: #999; font-size: 14px;
+    border: 1px dashed #ddd; border-radius: 12px; background: #fff;
+  }
+  .empty .icon { font-size: 32px; margin-bottom: 8px; }
+  @media (max-width: 480px) {
+    .header h1 { font-size: 15px; }
+    .card-answer { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">🩸</div>
+  <div>
+    <h1>กิจกรรมสาขาวิชาโลหิตวิทยา</h1>
+    <p>ข้อมูลสำหรับนักศึกษาแพทย์และแพทย์ elective</p>
+  </div>
+</div>
+
+<div class="main">
+  <div class="search-box">
+    <input id="q" type="text" placeholder="ถามเลย เช่น ราวด์กี่โมง? conference วันไหน?" />
+    <button class="search-btn" onclick="search(document.getElementById('q').value)">ค้นหา</button>
+  </div>
+
+  <div class="chips">
+    <span class="chip" onclick="search('ราวด์วอร์ด')">🏥 ราวด์วอร์ด</span>
+    <span class="chip" onclick="search('แกรนด์ราวด์')">📋 แกรนด์ราวด์</span>
+    <span class="chip" onclick="search('conference')">🔬 Conference</span>
+    <span class="chip" onclick="search('OPD')">👨‍⚕️ OPD</span>
+    <span class="chip" onclick="search('lecture')">📚 Lectures</span>
+    <span class="chip" onclick="search('line กลุ่ม')">💬 LINE กลุ่ม</span>
+    <span class="chip" onclick="search('เสร็จ leave')">✅ จบการดูงาน</span>
+  </div>
+
+  <div class="results" id="results">
+    <div class="empty">
+      <div class="icon">🔍</div>
+      พิมพ์คำถาม หรือกดหัวข้อด้านบนเพื่อค้นหาข้อมูล
+    </div>
+  </div>
+</div>
+
+<script>
+const DOC = [
+  {
+    tag: "เตรียมก่อนมาดูงาน",
+    keywords: ["line","กลุ่ม","add","elective","ก่อน","เตรียม","นัด","chief"],
+    answer: "ให้ add เข้ากลุ่ม LINE elective ก่อนวันมาดูงาน และดูรายละเอียดตารางราวด์วอร์ด + ตารางออก OPD ใน note ของกลุ่ม LINE\n\nให้นัดหมายเวลาและสถานที่ราวด์วอร์ดกับ chief resident ของสายด้วย"
+  },
+  {
+    tag: "ราวด์วอร์ด — ทีมและเวลา",
+    keywords: ["ราวด์","วอร์ด","ทีม","ชาย","หญิง","ปรึกษา","7.30","เช้า","เวลา","blood smear","bone marrow","attending"],
+    answer: "แบ่งเป็น 2 ทีม:\n(1) ทีมดูแลผู้ป่วยชาย\n(2) ทีมดูแลผู้ป่วยหญิง\n\nทั้งสองทีมรับปรึกษาผู้ป่วยอายุรกรรมและวอร์ดต่างภาควิชาที่มีปัญหาทางโลหิตวิทยา\n\n▸ ราวด์เช้า: 7:30 น. (เวลาอาจเปลี่ยน — นัดกับ chief resident ก่อน)\n▸ ช่วงบ่าย: ราวด์เคสรับปรึกษา ดู blood smear, bone marrow กับอาจารย์ attending"
+  },
+  {
+    tag: "แกรนด์ราวด์ — วันจันทร์",
+    keywords: ["แกรนด์ราวด์","grand round","จันทร์","13","15","อภิปราย","เคส","น่าสนใจ","problem list"],
+    answer: "แกรนด์ราวด์ ทุกวันจันทร์ เวลา 13:00–15:00 น.\n\nแพทย์ประจำบ้านนำเสนอเคสโลหิตวิทยาน่าสนใจ 2 เคส\n▸ นศพ. ช่วยทำ problem list\n▸ แพทย์ประจำบ้าน/แพทย์ elective ร่วม discussion ตามความสมัครใจ\n\n(สอบถามสถานที่จากแพทย์ประจำบ้าน)"
+  },
+  {
+    tag: "Hematology Conference — วันพฤหัสบดี",
+    keywords: ["conference","พฤหัส","พฤหัสบดี","13.15","interesting case","journal club","hpc","coagulation","morbidity","mortality","เสียชีวิต","pathology"],
+    answer: "Hematology Conference ทุกวันพฤหัสบดี เวลา 13:15–15:00 น.\n\n1. Interesting case — นศพ./elective ทำ problem list + แพทย์ประจำบ้านทบทวนวิชาการ\n2. Journal club\n3. Hematology Pathology Conference (HPC) — นำเสนอพร้อมอาจารย์พยาธิแพทย์บรรยายชิ้นเนื้อ\n4. Coagulation round — เคสปัญหาการแข็งตัวของเลือด / lab น่าสนใจ\n5. Morbidity & Mortality Conference — หัวหน้า resident นำเสนอเคสที่เสียชีวิต เพื่อพัฒนาการดูแล"
+  },
+  {
+    tag: "OPD — ตารางและระเบียบ",
+    keywords: ["opd","ออกตรวจ","ตาราง","observe","9.00","9.30","รหัส","ใบสั่งยา","อาหาร","เที่ยง","700"],
+    answer: "ดูตาราง OPD ได้ใน note ของกลุ่ม LINE\n\n▸ นศพ.: ไปถึง OPD700 ช่วง 9:00–9:30 น. เพื่อ observe การดูแลผู้ป่วยของอาจารย์\n\n▸ Resident / Fellow / แพทย์พี่เลี้ยง:\n  - ขอรหัสเข้าดูประวัติผู้ป่วยจาก chief resident\n  - ทุกเคสที่ตรวจให้ปรึกษาอาจารย์ได้ทุกท่านที่ออก OPD\n  - ขอให้อาจารย์เซ็นชื่อในใบสั่งยาทุกครั้ง\n\n▸ หลัง OPD มีอาหารเที่ยงที่ห้องดูกล้องด้านหลัง OPD — ร่วมรับประทานได้เลย"
+  },
+  {
+    tag: "Lectures Online — SelecX",
+    keywords: ["lecture","selecx","online","อินเทิร์นนิสต์","hematology for internist","thrombocytopenia","anemia","leukemia","lymphoma","thalassemia","itp","aiha","mpn","anticoagulant","coagulogram","blood product"],
+    answer: "เข้าได้ผ่าน SelecX ภาควิชาอายุรศาสตร์\n→ การศึกษาหลังปริญญา → COURSE → Hematology for Internist 2022\n\nหัวข้อแนะนำสำหรับ นศพ.:\n• Thrombocytopenia in hospitalized patients\n• Acute anemia in hospitalized patients\n• Management of hematologic-oncologic emergencies\n• The simple concept to interpret coagulogram\n• Anticoagulants: traditional and novel drugs\n• ITP, AIHA, MPN, Acute leukemia\n• How to choose appropriate blood products\n• A practical care in thalassemic patients\n• Approach to bleeding and thrombosis\n• Non-Hodgkin / Hodgkin lymphoma"
+  },
+  {
+    tag: "Lectures ในสาขา",
+    keywords: ["lecture","resident med","สาขา","เที่ยง","ศุกร์","priority","อาจารย์","วันที่ 1","วันที่ 3"],
+    answer: "▸ Lectures สำหรับ resident med ในสาขา:\n  เข้าร่วมได้ — สอบถามวันเรียนจาก resident ในทีมวอร์ด\n  การเรียน lecture เป็น priority แรก (ถ้า attending นัดราวด์พร้อมกัน ให้เรียนก่อน แล้วค่อยกลับมาราวด์)\n\n▸ Lectures ช่วงเที่ยง:\n  ทุกวันศุกร์ที่ 1 และ 3 ของเดือน\n  สอบถามสถานที่หรือ link online จากทีมวอร์ด"
+  },
+  {
+    tag: "เสร็จสิ้นการดูงาน",
+    keywords: ["เสร็จ","ลงจาก","ออก","leave","google form","ประเมิน","ฟีดแบ็ก","จบ"],
+    answer: "เมื่อเสร็จสิ้นการดูงาน:\n\n1. กรอก Google Form ประเมินผลที่ส่งให้\n2. Leave กลุ่ม LINE ได้เลย"
+  }
+];
+
+document.getElementById('q').addEventListener('keydown', e => {
+  if (e.key === 'Enter') search(document.getElementById('q').value);
+});
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function highlight(text, query) {
+  let safe = escapeHtml(text);
+  if (!query) return safe;
+  const words = query.trim().split(/\s+/).filter(w => w.length > 1);
+  words.forEach(w => {
+    const re = new RegExp(escapeHtml(w), 'gi');
+    safe = safe.replace(re, m => `<mark>${m}</mark>`);
+  });
+  return safe;
+}
+
+function search(query) {
+  document.getElementById('q').value = query;
+  const q = query.trim().toLowerCase();
+  const resultsEl = document.getElementById('results');
+  if (!q) {
+    resultsEl.innerHTML = '<div class="empty"><div class="icon">🔍</div>พิมพ์คำถาม หรือกดหัวข้อด้านบนเพื่อค้นหาข้อมูล</div>';
+    return;
+  }
+  const words = q.split(/\s+/);
+  const scored = DOC.map(item => {
+    const allText = (item.tag + ' ' + item.keywords.join(' ') + ' ' + item.answer).toLowerCase();
+    const score = words.reduce((s, w) =>
+      s + (allText.includes(w) ? (item.keywords.some(k => k.includes(w)) ? 3 : 1) : 0), 0);
+    return { ...item, score };
+  }).filter(i => i.score > 0).sort((a, b) => b.score - a.score);
+
+  if (!scored.length) {
+    resultsEl.innerHTML = '<div class="empty"><div class="icon">😕</div>ไม่พบข้อมูลที่ตรงกัน<br>ลองพิมพ์ด้วยคำอื่น เช่น "ราวด์" "OPD" "conference" "lecture"</div>';
+    return;
+  }
+  resultsEl.innerHTML = scored.map(item => `
+    <div class="card">
+      <div class="card-tag">${escapeHtml(item.tag)}</div>
+      <div class="card-answer">${highlight(item.answer, query)}</div>
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>
