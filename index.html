@@ -26,7 +26,7 @@
   }
   .header h1 { font-size: 17px; font-weight: 600; }
   .header p { font-size: 12px; color: #888; margin-top: 1px; }
-  .main { max-width: 700px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+  .main { max-width: 700px; margin: 0 auto; padding: 1.5rem 1rem 2rem; }
   .search-box {
     background: #fff;
     border: 1px solid #ddd;
@@ -83,9 +83,40 @@
     border: 1px dashed #ddd; border-radius: 12px; background: #fff;
   }
   .empty .icon { font-size: 32px; margin-bottom: 8px; }
+  .reflection-banner {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, #e8f4ee 0%, #d4eddf 100%);
+    border: 1px solid #b2d9c3;
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .reflection-banner .rb-icon { font-size: 32px; flex-shrink: 0; }
+  .reflection-banner .rb-text { flex: 1; min-width: 160px; }
+  .reflection-banner .rb-text h3 { font-size: 15px; font-weight: 600; color: #1d6a45; margin-bottom: 4px; }
+  .reflection-banner .rb-text p { font-size: 13px; color: #3a7a5a; line-height: 1.5; }
+  .reflection-banner a.rb-btn {
+    display: inline-block;
+    background: #1d6a45; color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: 'Sarabun', sans-serif;
+    font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .reflection-banner a.rb-btn:hover { background: #155234; }
   @media (max-width: 480px) {
     .header h1 { font-size: 15px; }
     .card-answer { font-size: 14px; }
+    .reflection-banner { flex-direction: column; text-align: center; }
+    .reflection-banner a.rb-btn { width: 100%; text-align: center; }
   }
 </style>
 </head>
@@ -120,6 +151,15 @@
       <div class="icon">🔍</div>
       พิมพ์คำถาม หรือกดหัวข้อด้านบนเพื่อค้นหาข้อมูล
     </div>
+  </div>
+
+  <div class="reflection-banner">
+    <div class="rb-icon">📝</div>
+    <div class="rb-text">
+      <h3>ประเมินความเห็นหลังดูงาน</h3>
+      <p>เมื่อเสร็จสิ้นการดูงานแล้ว ขอให้กรอกแบบประเมิน<br>เพื่อพัฒนาการดูงานให้ดียิ่งขึ้น 🙏</p>
+    </div>
+    <a class="rb-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeHPePaS04OyV44_Uh3Hw1ifGKNaO5nK6tMqtXP_b-trJMffw/viewform" target="_blank">กรอกแบบประเมิน →</a>
   </div>
 </div>
 
