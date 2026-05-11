@@ -22,21 +22,38 @@
     background: #e8f4ee;
     border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
+    font-size: 22px; flex-shrink: 0;
   }
+  .header-titles { flex: 1; min-width: 0; }
   .header h1 { font-size: 17px; font-weight: 600; }
   .header p { font-size: 12px; color: #888; margin-top: 1px; }
+  .lang-toggle {
+    display: flex; background: #f0f0ee;
+    border-radius: 8px; padding: 3px; gap: 2px; flex-shrink: 0;
+  }
+  .lang-btn {
+    border: none; background: transparent; border-radius: 6px;
+    padding: 5px 12px; font-size: 13px; font-weight: 600;
+    font-family: 'Sarabun', sans-serif; cursor: pointer;
+    color: #888; transition: all 0.15s; letter-spacing: 0.03em;
+  }
+  .lang-btn.active { background: #fff; color: #1d6a45; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
   .main { max-width: 700px; margin: 0 auto; padding: 1.5rem 1rem 2rem; }
+
+  .notice-banner {
+    background: #fffbeb; border: 1px solid #fde68a;
+    border-radius: 12px; padding: 0.9rem 1.1rem;
+    margin-bottom: 1rem; font-size: 13.5px;
+    color: #78350f; line-height: 1.6;
+  }
+  .notice-banner strong { color: #92400e; }
+
   .search-box {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 10px 14px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 1rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    background: #fff; border: 1px solid #ddd;
+    border-radius: 12px; padding: 10px 14px;
+    display: flex; gap: 10px; align-items: center;
+    margin-bottom: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   }
   .search-box input {
     flex: 1; border: none; outline: none;
@@ -51,70 +68,86 @@
     cursor: pointer; white-space: nowrap;
   }
   .search-btn:hover { background: #155234; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; }
-  .chip {
-    background: #fff; border: 1px solid #ddd;
-    border-radius: 20px; padding: 6px 14px;
-    font-size: 13px; font-family: 'Sarabun', sans-serif;
-    color: #555; cursor: pointer; transition: all 0.15s;
+  .clear-btn {
+    background: none; border: none; cursor: pointer;
+    font-size: 18px; color: #bbb; padding: 0 2px;
+    line-height: 1; display: none;
   }
-  .chip:hover { background: #e8f4ee; border-color: #1d6a45; color: #1d6a45; }
-  .results { display: flex; flex-direction: column; gap: 12px; }
-  .card {
+  .clear-btn:hover { color: #888; }
+
+  /* Accordion cards */
+  .accordion { display: flex; flex-direction: column; gap: 8px; }
+
+  .acc-item {
     background: #fff; border: 1px solid #e5e3dc;
-    border-radius: 12px; padding: 1rem 1.25rem;
+    border-radius: 12px; overflow: hidden;
     border-left: 4px solid #1d6a45;
+    transition: box-shadow 0.15s;
   }
-  .card-tag {
+  .acc-item.hidden { display: none; }
+  .acc-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+
+  .acc-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.85rem 1.1rem; cursor: pointer;
+    user-select: none; gap: 10px;
+  }
+  .acc-tag {
     display: inline-block;
     background: #e8f4ee; color: #1d6a45;
-    font-size: 11px; font-weight: 600;
-    border-radius: 6px; padding: 3px 10px;
-    margin-bottom: 10px; letter-spacing: 0.02em;
+    font-size: 12px; font-weight: 600;
+    border-radius: 6px; padding: 4px 11px;
+    letter-spacing: 0.02em;
   }
-  .card-answer {
+  .acc-chevron {
+    font-size: 14px; color: #aaa;
+    transition: transform 0.2s; flex-shrink: 0;
+  }
+  .acc-item.open .acc-chevron { transform: rotate(180deg); color: #1d6a45; }
+
+  .acc-body {
+    display: none;
+    padding: 0 1.1rem 1rem;
+    border-top: 1px solid #f0ede8;
+  }
+  .acc-item.open .acc-body { display: block; }
+
+  .acc-answer {
     font-size: 14.5px; line-height: 1.85;
     color: #2a2a2a; white-space: pre-wrap;
+    padding-top: 0.75rem;
   }
   mark { background: #fef3c7; color: #7c5a00; border-radius: 3px; padding: 0 2px; }
-  .empty {
+
+  .no-result {
     text-align: center; padding: 2.5rem 1rem;
     color: #999; font-size: 14px;
     border: 1px dashed #ddd; border-radius: 12px; background: #fff;
   }
-  .empty .icon { font-size: 32px; margin-bottom: 8px; }
+  .no-result .icon { font-size: 32px; margin-bottom: 8px; }
+
   .reflection-banner {
     margin-top: 2rem;
     background: linear-gradient(135deg, #e8f4ee 0%, #d4eddf 100%);
-    border: 1px solid #b2d9c3;
-    border-radius: 14px;
+    border: 1px solid #b2d9c3; border-radius: 14px;
     padding: 1.25rem 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
   }
   .reflection-banner .rb-icon { font-size: 32px; flex-shrink: 0; }
   .reflection-banner .rb-text { flex: 1; min-width: 160px; }
   .reflection-banner .rb-text h3 { font-size: 15px; font-weight: 600; color: #1d6a45; margin-bottom: 4px; }
   .reflection-banner .rb-text p { font-size: 13px; color: #3a7a5a; line-height: 1.5; }
   .reflection-banner a.rb-btn {
-    display: inline-block;
-    background: #1d6a45; color: #fff;
-    text-decoration: none;
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-family: 'Sarabun', sans-serif;
-    font-weight: 500;
-    white-space: nowrap;
-    flex-shrink: 0;
-    transition: background 0.15s;
+    display: inline-block; background: #1d6a45; color: #fff;
+    text-decoration: none; border-radius: 10px; padding: 10px 20px;
+    font-size: 14px; font-family: 'Sarabun', sans-serif; font-weight: 500;
+    white-space: nowrap; flex-shrink: 0; transition: background 0.15s;
   }
   .reflection-banner a.rb-btn:hover { background: #155234; }
+
   @media (max-width: 480px) {
     .header h1 { font-size: 15px; }
-    .card-answer { font-size: 14px; }
+    .acc-answer { font-size: 14px; }
     .reflection-banner { flex-direction: column; text-align: center; }
     .reflection-banner a.rb-btn { width: 100%; text-align: center; }
   }
@@ -124,92 +157,149 @@
 
 <div class="header">
   <div class="header-icon">🩸</div>
-  <div>
-    <h1>กิจกรรมสาขาวิชาโลหิตวิทยา</h1>
-    <p>ข้อมูลสำหรับนักศึกษาแพทย์และแพทย์ elective</p>
+  <div class="header-titles">
+    <h1 id="header-title">กิจกรรมสาขาวิชาโลหิตวิทยา</h1>
+    <p id="header-sub">ข้อมูลสำหรับนักศึกษาแพทย์และแพทย์ elective</p>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-th" onclick="setLang('th')">TH</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
   </div>
 </div>
 
 <div class="main">
+  <div class="notice-banner" id="notice-banner">
+    <strong>⚠️ ก่อนเริ่มดูงาน:</strong> กรุณา add เข้ากลุ่ม LINE ก่อนและแนะนำตัวกับทีม<br>
+    <strong>📋 วันแรก:</strong> Staff จะ orientate กิจกรรมทั้งหมดให้
+  </div>
+
   <div class="search-box">
-    <input id="q" type="text" placeholder="ถามเลย เช่น ราวด์กี่โมง? conference วันไหน?" />
-    <button class="search-btn" onclick="search(document.getElementById('q').value)">ค้นหา</button>
+    <input id="q" type="text" placeholder="ค้นหา เช่น ราวด์กี่โมง? conference วันไหน?" oninput="onInput()" />
+    <button class="clear-btn" id="clear-btn" onclick="clearSearch()">✕</button>
+    <button class="search-btn" id="search-btn" onclick="doSearch()">ค้นหา</button>
   </div>
 
-  <div class="chips">
-    <span class="chip" onclick="search('ราวด์วอร์ด')">🏥 ราวด์วอร์ด</span>
-    <span class="chip" onclick="search('แกรนด์ราวด์')">📋 แกรนด์ราวด์</span>
-    <span class="chip" onclick="search('conference')">🔬 Conference</span>
-    <span class="chip" onclick="search('OPD')">👨‍⚕️ OPD</span>
-    <span class="chip" onclick="search('lecture')">📚 Lectures</span>
-    <span class="chip" onclick="search('line กลุ่ม')">💬 LINE กลุ่ม</span>
-    <span class="chip" onclick="search('เสร็จ leave')">✅ จบการดูงาน</span>
-  </div>
+  <div class="accordion" id="accordion"></div>
 
-  <div class="results" id="results">
-    <div class="empty">
-      <div class="icon">🔍</div>
-      พิมพ์คำถาม หรือกดหัวข้อด้านบนเพื่อค้นหาข้อมูล
-    </div>
-  </div>
-
-  <div class="reflection-banner">
+  <div class="reflection-banner" style="display:none" id="rb">
     <div class="rb-icon">📝</div>
     <div class="rb-text">
-      <h3>ประเมินความเห็นหลังดูงาน</h3>
-      <p>เมื่อเสร็จสิ้นการดูงานแล้ว ขอให้กรอกแบบประเมิน<br>เพื่อพัฒนาการดูงานให้ดียิ่งขึ้น 🙏</p>
+      <h3 id="rb-title">ประเมินความเห็นหลังดูงาน</h3>
+      <p id="rb-desc">เมื่อเสร็จสิ้นการดูงานแล้ว ขอให้กรอกแบบประเมิน<br>เพื่อพัฒนาการดูงานให้ดียิ่งขึ้น 🙏</p>
     </div>
-    <a class="rb-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeHPePaS04OyV44_Uh3Hw1ifGKNaO5nK6tMqtXP_b-trJMffw/viewform" target="_blank">กรอกแบบประเมิน →</a>
+    <a class="rb-btn" id="rb-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeHPePaS04OyV44_Uh3Hw1ifGKNaO5nK6tMqtXP_b-trJMffw/viewform" target="_blank">กรอกแบบประเมิน →</a>
   </div>
 </div>
 
 <script>
-const DOC = [
-  {
-    tag: "เตรียมก่อนมาดูงาน",
-    keywords: ["line","กลุ่ม","add","elective","ก่อน","เตรียม","นัด","chief"],
-    answer: "ให้ add เข้ากลุ่ม LINE elective ก่อนวันมาดูงาน และดูรายละเอียดตารางราวด์วอร์ด + ตารางออก OPD ใน note ของกลุ่ม LINE\n\nให้นัดหมายเวลาและสถานที่ราวด์วอร์ดกับ chief resident ของสายด้วย"
-  },
-  {
-    tag: "ราวด์วอร์ด — ทีมและเวลา",
-    keywords: ["ราวด์","วอร์ด","ทีม","ชาย","หญิง","ปรึกษา","7.30","เช้า","เวลา","blood smear","bone marrow","attending"],
-    answer: "แบ่งเป็น 2 ทีม:\n(1) ทีมดูแลผู้ป่วยชาย\n(2) ทีมดูแลผู้ป่วยหญิง\n\nทั้งสองทีมรับปรึกษาผู้ป่วยอายุรกรรมและวอร์ดต่างภาควิชาที่มีปัญหาทางโลหิตวิทยา\n\n▸ ราวด์เช้า: 7:30 น. (เวลาอาจเปลี่ยน — นัดกับ chief resident ก่อน)\n▸ ช่วงบ่าย: ราวด์เคสรับปรึกษา ดู blood smear, bone marrow กับอาจารย์ attending"
-  },
-  {
-    tag: "แกรนด์ราวด์ — วันจันทร์",
-    keywords: ["แกรนด์ราวด์","grand round","จันทร์","13","15","อภิปราย","เคส","น่าสนใจ","problem list"],
-    answer: "แกรนด์ราวด์ ทุกวันจันทร์ เวลา 13:00–15:00 น.\n\nแพทย์ประจำบ้านนำเสนอเคสโลหิตวิทยาน่าสนใจ 2 เคส\n▸ นศพ. ช่วยทำ problem list\n▸ แพทย์ประจำบ้าน/แพทย์ elective ร่วม discussion ตามความสมัครใจ\n\n(สอบถามสถานที่จากแพทย์ประจำบ้าน)"
-  },
-  {
-    tag: "Hematology Conference — วันพฤหัสบดี",
-    keywords: ["conference","พฤหัส","พฤหัสบดี","13.15","interesting case","journal club","hpc","coagulation","morbidity","mortality","เสียชีวิต","pathology"],
-    answer: "Hematology Conference ทุกวันพฤหัสบดี เวลา 13:15–15:00 น.\n\n1. Interesting case — นศพ./elective ทำ problem list + แพทย์ประจำบ้านทบทวนวิชาการ\n2. Journal club\n3. Hematology Pathology Conference (HPC) — นำเสนอพร้อมอาจารย์พยาธิแพทย์บรรยายชิ้นเนื้อ\n4. Coagulation round — เคสปัญหาการแข็งตัวของเลือด / lab น่าสนใจ\n5. Morbidity & Mortality Conference — หัวหน้า resident นำเสนอเคสที่เสียชีวิต เพื่อพัฒนาการดูแล"
-  },
-  {
-    tag: "OPD — ตารางและระเบียบ",
-    keywords: ["opd","ออกตรวจ","ตาราง","observe","9.00","9.30","รหัส","ใบสั่งยา","อาหาร","เที่ยง","700"],
-    answer: "ดูตาราง OPD ได้ใน note ของกลุ่ม LINE\n\n▸ นศพ.: ไปถึง OPD700 ช่วง 9:00–9:30 น. เพื่อ observe การดูแลผู้ป่วยของอาจารย์\n\n▸ Resident / Fellow / แพทย์พี่เลี้ยง:\n  - ขอรหัสเข้าดูประวัติผู้ป่วยจาก chief resident\n  - ทุกเคสที่ตรวจให้ปรึกษาอาจารย์ได้ทุกท่านที่ออก OPD\n  - ขอให้อาจารย์เซ็นชื่อในใบสั่งยาทุกครั้ง\n\n▸ หลัง OPD มีอาหารเที่ยงที่ห้องดูกล้องด้านหลัง OPD — ร่วมรับประทานได้เลย"
-  },
-  {
-    tag: "Lectures Online — SelecX",
-    keywords: ["lecture","selecx","online","อินเทิร์นนิสต์","hematology for internist","thrombocytopenia","anemia","leukemia","lymphoma","thalassemia","itp","aiha","mpn","anticoagulant","coagulogram","blood product"],
-    answer: "เข้าได้ผ่าน SelecX ภาควิชาอายุรศาสตร์\n→ การศึกษาหลังปริญญา → COURSE → Hematology for Internist 2022\n\nหัวข้อแนะนำสำหรับ นศพ.:\n• Thrombocytopenia in hospitalized patients\n• Acute anemia in hospitalized patients\n• Management of hematologic-oncologic emergencies\n• The simple concept to interpret coagulogram\n• Anticoagulants: traditional and novel drugs\n• ITP, AIHA, MPN, Acute leukemia\n• How to choose appropriate blood products\n• A practical care in thalassemic patients\n• Approach to bleeding and thrombosis\n• Non-Hodgkin / Hodgkin lymphoma"
-  },
-  {
-    tag: "Lectures ในสาขา",
-    keywords: ["lecture","resident med","สาขา","เที่ยง","ศุกร์","priority","อาจารย์","วันที่ 1","วันที่ 3"],
-    answer: "▸ Lectures สำหรับ resident med ในสาขา:\n  เข้าร่วมได้ — สอบถามวันเรียนจาก resident ในทีมวอร์ด\n  การเรียน lecture เป็น priority แรก (ถ้า attending นัดราวด์พร้อมกัน ให้เรียนก่อน แล้วค่อยกลับมาราวด์)\n\n▸ Lectures ช่วงเที่ยง:\n  ทุกวันศุกร์ที่ 1 และ 3 ของเดือน\n  สอบถามสถานที่หรือ link online จากทีมวอร์ด"
-  },
-  {
-    tag: "เสร็จสิ้นการดูงาน",
-    keywords: ["เสร็จ","ลงจาก","ออก","leave","google form","ประเมิน","ฟีดแบ็ก","จบ"],
-    answer: "เมื่อเสร็จสิ้นการดูงาน:\n\n1. กรอก Google Form ประเมินผลที่ส่งให้\n2. Leave กลุ่ม LINE ได้เลย"
-  }
-];
+let currentLang = 'th';
+let searchActive = false;
 
-document.getElementById('q').addEventListener('keydown', e => {
-  if (e.key === 'Enter') search(document.getElementById('q').value);
-});
+const LANG = {
+  th: {
+    headerTitle: 'กิจกรรมสาขาวิชาโลหิตวิทยา',
+    headerSub: 'ข้อมูลสำหรับนักศึกษาแพทย์และแพทย์ elective',
+    notice: '<strong>⚠️ ก่อนเริ่มดูงาน:</strong> กรุณา add เข้ากลุ่ม LINE ก่อนและแนะนำตัวกับทีม<br><strong>📋 วันแรก:</strong> Staff จะ orientate กิจกรรมทั้งหมดให้',
+    placeholder: 'ค้นหา เช่น ราวด์กี่โมง? conference วันไหน?',
+    searchBtn: 'ค้นหา',
+    noResult: '<div class="icon">😕</div>ไม่พบข้อมูลที่ตรงกัน<br>ลองพิมพ์คำอื่น เช่น "ราวด์" "OPD" "conference"',
+    rbTitle: 'ประเมินความเห็นหลังดูงาน',
+    rbDesc: 'เมื่อเสร็จสิ้นการดูงานแล้ว ขอให้กรอกแบบประเมิน<br>เพื่อพัฒนาการดูงานให้ดียิ่งขึ้น 🙏',
+    rbBtn: 'กรอกแบบประเมิน →',
+    rbUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSeHPePaS04OyV44_Uh3Hw1ifGKNaO5nK6tMqtXP_b-trJMffw/viewform'
+  },
+  en: {
+    headerTitle: 'Elective Activities — Division of Hematology',
+    headerSub: 'Information for medical students & elective physicians',
+    notice: '<strong>⚠️ Before starting:</strong> Please join the LINE group and introduce yourself to the team<br><strong>📋 Day 1:</strong> Staff will orientate all activities on your first day',
+    placeholder: 'Search, e.g. When is ward round? Which day is conference?',
+    searchBtn: 'Search',
+    noResult: '<div class="icon">😕</div>No results found<br>Try keywords like "ward round", "OPD", "conference"',
+    rbTitle: 'Post-Elective Feedback',
+    rbDesc: 'When you have finished your elective,<br>please fill in the reflection form 🙏',
+    rbBtn: 'Fill Feedback Form →',
+    rbUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScAXkpKgsEkYLoR6xz4QjdkVOps9fDxc3axagOSxNNnsq2QVA/viewform'
+  }
+};
+
+const DOC = {
+  th: [
+    {
+      tag: "เตรียมก่อนมาดูงาน",
+      keywords: ["line","กลุ่ม","add","elective","ก่อน","เตรียม","นัด","chief","แนะนำตัว"],
+      answer: "ให้ add เข้ากลุ่ม LINE elective ก่อนวันมาดูงาน และแนะนำตัวกับทีม\n\nดูรายละเอียดตารางราวด์วอร์ด + ตารางออก OPD ใน note ของกลุ่ม LINE\n\nให้นัดหมายเวลาและสถานที่ราวด์วอร์ดกับ chief resident ของสายด้วย"
+    },
+    {
+      tag: "ราวด์วอร์ด — ทีมและเวลา",
+      keywords: ["ราวด์","วอร์ด","ทีม","ชาย","หญิง","ปรึกษา","7.30","7:30","เช้า","เวลา","blood smear","bone marrow","attending","ชั้น 23","นวมินทร์","มะเร็ง","เคมีบำบัด","leukemia","lymphoma"],
+      answer: "วอร์ดโลหิตวิทยาอยู่ที่ชั้น 23 อาคารนวมินทรบพิตร 84 พรรษา\n▸ ปีกใต้ — ผู้ป่วยชาย (ให้เคมีบำบัดแก่ผู้ป่วยมะเร็งเลือด เช่น Acute leukemia, Lymphoma)\n▸ ปีกเหนือ — ผู้ป่วยหญิง\n\nทั้งสองทีมรับปรึกษาผู้ป่วยอายุรกรรมและวอร์ดต่างภาควิชาที่มีปัญหาทางโลหิตวิทยา\n\n▸ ราวด์เช้า: 7:30 น. (เวลาอาจเปลี่ยน — นัดกับ chief resident ก่อน)\n▸ ช่วงบ่าย: ราวด์เคสรับปรึกษา ดู blood smear, bone marrow กับอาจารย์ attending"
+    },
+    {
+      tag: "แกรนด์ราวด์ — วันจันทร์ 13:00–15:00",
+      keywords: ["แกรนด์ราวด์","grand round","จันทร์","13","15","อภิปราย","เคส","น่าสนใจ","problem list"],
+      answer: "ทุกวันจันทร์ เวลา 13:00–15:00 น.\n\nแพทย์ประจำบ้านนำเสนอเคสโลหิตวิทยาน่าสนใจ 2 เคส\n▸ นศพ. อาจได้รับโอกาสทำ problem list\n▸ ร่วม discussion ตามความสมัครใจ\n\n(สอบถามสถานที่จากแพทย์ประจำบ้าน)"
+    },
+    {
+      tag: "Hematology Conference — วันพฤหัสบดี 13:15–14:15",
+      keywords: ["conference","พฤหัส","พฤหัสบดี","13.15","13:15","interesting case","journal club","hpc","coagulation","morbidity","mortality","เสียชีวิต","pathology","เลือด","การแข็งตัว"],
+      answer: "ทุกวันพฤหัสบดี เวลา 13:15–14:15 น.\n\nกิจกรรมหมุนเวียนแต่ละสัปดาห์:\n1. Interesting case — แพทย์ประจำบ้านนำเสนอและทบทวนวิชาการ; นศพ./elective อาจทำ problem list\n2. Journal club\n3. Hematology Pathology Conference (HPC) — นำเสนอพร้อมอาจารย์พยาธิแพทย์ รวมชิ้นเนื้อที่น่าสนใจหรือยากในการวินิจฉัย\n4. Coagulation round — เคสปัญหาการแข็งตัวของเลือด, thrombosis, ภาวะเลือดออกผิดปกติ หรือ lab น่าสนใจ\n5. Morbidity & Mortality Conference — หัวหน้า resident นำเสนอเคสที่เสียชีวิต เพื่อพัฒนาการดูแล"
+    },
+    {
+      tag: "OPD — ตารางและระเบียบ",
+      keywords: ["opd","ออกตรวจ","ตาราง","observe","9.00","9:00","9.30","9:30","700","ชั้น 7","อาหาร","เที่ยง","ใบสั่งยา","รหัส"],
+      answer: "ดูตาราง OPD ได้ใน note ของกลุ่ม LINE (อาจารย์จัดตารางให้แต่ละคน)\n\n▸ นศพ.: ไปถึง ห้อง 700 ชั้น 7 อาคาร OPD ช่วง 9:00–9:30 น.\n▸ OPD ช่วงเวลา 9:00–12:00 น.\n▸ หลัง OPD มีอาหารเที่ยงที่ห้องด้านหลัง OPD — ร่วมรับประทานได้เลย\n\nก่อนมาดูงาน 1–2 สัปดาห์: กรุณาระบุ objective/goal ที่ต้องการเรียนรู้\nหลังจบดูงาน: กรอก reflection/feedback ผ่าน Google Form ที่ส่งให้"
+    },
+    {
+      tag: "Lectures Online — SelecX",
+      keywords: ["lecture","selecx","online","hematology for internist","thrombocytopenia","anemia","leukemia","lymphoma","thalassemia","itp","aiha","mpn","anticoagulant","coagulogram","blood product"],
+      answer: "เข้าได้ผ่าน SelecX ภาควิชาอายุรศาสตร์\n→ การศึกษาหลังปริญญา → COURSE → Hematology for Internist 2022\n\nหัวข้อแนะนำ:\n• Thrombocytopenia in hospitalized patients\n• Acute anemia in hospitalized patients\n• Management of hematologic-oncologic emergencies\n• The simple concept to interpret coagulogram\n• Anticoagulants: traditional and novel drugs\n• ITP, AIHA, MPN, Acute leukemia\n• How to choose appropriate blood products\n• A practical care in thalassemic patients\n• Approach to bleeding and thrombosis\n• Non-Hodgkin / Hodgkin lymphoma"
+    },
+    {
+      tag: "Lectures ในสาขา — ศุกร์ที่ 1 และ 3",
+      keywords: ["lecture","resident med","สาขา","เที่ยง","ศุกร์","priority","วันที่ 1","วันที่ 3"],
+      answer: "▸ Lectures สำหรับ resident med ในสาขา:\n  เข้าร่วมได้ — สอบถามวันเรียนจาก resident ในทีมวอร์ด\n  การเรียน lecture เป็น priority แรก (ถ้า attending นัดราวด์พร้อมกัน ให้เรียนก่อน)\n\n▸ Lectures ช่วงเที่ยง:\n  ทุกวันศุกร์ที่ 1 และ 3 ของเดือน\n  สอบถามสถานที่หรือ link online จากทีมวอร์ด"
+    },
+    {
+      tag: "เสร็จสิ้นการดูงาน",
+      keywords: ["เสร็จ","leave","google form","ประเมิน","ฟีดแบ็ก","จบ","ออกกลุ่ม","reflection"],
+      answer: "เมื่อเสร็จสิ้นการดูงาน:\n\n1. กรอก Google Form reflection/feedback ที่ส่งให้ — แสดงความคิดเห็นและข้อเสนอแนะ\n2. Leave กลุ่ม LINE ได้เลย\n\nขอให้มีความสุขและได้รับความรู้ด้านโลหิตวิทยาอย่างเต็มที่ 🩸"
+    }
+  ],
+  en: [
+    {
+      tag: "Before You Start",
+      keywords: ["line","group","add","elective","before","prepare","chief","introduce","join"],
+      answer: "Please join the LINE elective group before your start date and introduce yourself to the team.\n\nCheck the ward round schedule and OPD schedule posted in the LINE group notes.\n\nConfirm the ward round time and meeting point with the chief resident of your assigned team."
+    },
+    {
+      tag: "Ward Round — Teams & Schedule",
+      keywords: ["ward","round","team","male","female","consult","7:30","morning","time","blood smear","bone marrow","attending","23rd floor","navamindra","chemo","leukemia","lymphoma"],
+      answer: "The hematology ward is on the 23rd floor of the Navamindrapobitr 84th Anniversary Building.\n▸ South wing — male patients (chemotherapy for hematologic malignancies e.g. acute leukemia, lymphoma)\n▸ North wing — female patients\n\nBoth teams also provide consultations for hematologic problems in internal medicine and other department wards.\n\n▸ Morning round: 7:30 AM (time may vary — confirm with chief resident)\n▸ Afternoon: Consult rounds, blood smear and bone marrow review with attending"
+    },
+    {
+      tag: "Grand Round — Monday 13:00–15:00",
+      keywords: ["grand round","monday","13:00","15:00","discuss","case","interesting","problem list"],
+      answer: "Every Monday, 13:00–15:00\n\nThe resident presents 2 interesting hematology cases.\n▸ Elective students may be asked to provide the patient's problem list\n▸ Discussion is open — all participants may contribute voluntarily\n\n(Ask the resident for the venue on the day)"
+    },
+    {
+      tag: "Hematology Conference — Thursday 13:15–14:15",
+      keywords: ["conference","thursday","13:15","14:15","interesting case","journal club","hpc","coagulation","morbidity","mortality","pathology","deceased","bleeding","thrombosis"],
+      answer: "Every Thursday, 13:15–14:15\n\nActivities rotate weekly:\n1. Interesting Case — resident presents and reviews the relevant literature; students may be asked for a problem list\n2. Journal Club\n3. Hematology Pathology Conference (HPC) — case presented alongside a pathologist, including histology review (rare or diagnostically challenging cases)\n4. Coagulation Round — cases on coagulation disorders, thrombosis, abnormal bleeding, or intriguing coagulation lab results\n5. Morbidity & Mortality Conference — chief resident presents deceased cases from the month to improve patient care"
+    },
+    {
+      tag: "OPD — Schedule & Guidelines",
+      keywords: ["opd","schedule","observe","9:00","9:30","room 700","7th floor","lunch","outpatient","clinic"],
+      answer: "Check your personal OPD schedule (arranged by the lecturer) in the LINE group.\n\n▸ Go to Room 700, 7th floor, OPD Building by 9:00–9:30 AM\n▸ OPD hours: 9:00–12:00\n▸ Lunch is available at the room behind OPD after the session\n\n1–2 weeks before your elective: please specify your learning objective/goal\nAfter finishing: please fill in the reflection/feedback via the Google Form provided"
+    },
+    {
+      tag: "After Your Elective",
+      keywords: ["finish","done","end","leave","google form","feedback","reflection","complete","final"],
+      answer: "When your elective placement is finished:\n\n1. Fill in the Google Form with your reflection — share what you gained and any suggestions for future improvement\n2. You may then leave the LINE group\n\nWe wish you all the happiness and a wealth of hematology knowledge! 🩸"
+    }
+  ]
+};
+
+// ---- Render ----
 
 function escapeHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -226,33 +316,116 @@ function highlight(text, query) {
   return safe;
 }
 
-function search(query) {
-  document.getElementById('q').value = query;
-  const q = query.trim().toLowerCase();
-  const resultsEl = document.getElementById('results');
-  if (!q) {
-    resultsEl.innerHTML = '<div class="empty"><div class="icon">🔍</div>พิมพ์คำถาม หรือกดหัวข้อด้านบนเพื่อค้นหาข้อมูล</div>';
+function renderAccordion(docs, query) {
+  const acc = document.getElementById('accordion');
+  acc.innerHTML = '';
+
+  if (docs.length === 0) {
+    acc.innerHTML = `<div class="no-result">${LANG[currentLang].noResult}</div>`;
     return;
   }
+
+  docs.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'acc-item';
+    div.dataset.idx = idx;
+    div.innerHTML = `
+      <div class="acc-header" onclick="toggleItem(this.parentElement)">
+        <span class="acc-tag">${escapeHtml(item.tag)}</span>
+        <span class="acc-chevron">▾</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-answer">${highlight(item.answer, query)}</div>
+      </div>
+    `;
+    acc.appendChild(div);
+  });
+}
+
+function toggleItem(el) {
+  el.classList.toggle('open');
+}
+
+// ---- Search logic ----
+
+function onInput() {
+  const val = document.getElementById('q').value;
+  document.getElementById('clear-btn').style.display = val ? 'block' : 'none';
+  if (!val.trim()) {
+    clearSearch();
+  }
+}
+
+function clearSearch() {
+  document.getElementById('q').value = '';
+  document.getElementById('clear-btn').style.display = 'none';
+  searchActive = false;
+  renderAccordion(DOC[currentLang], '');
+  // close all
+  document.querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
+}
+
+function doSearch() {
+  const query = document.getElementById('q').value.trim();
+  if (!query) { clearSearch(); return; }
+
+  searchActive = true;
+  const q = query.toLowerCase();
   const words = q.split(/\s+/);
-  const scored = DOC.map(item => {
+  const docs = DOC[currentLang];
+
+  const scored = docs.map(item => {
     const allText = (item.tag + ' ' + item.keywords.join(' ') + ' ' + item.answer).toLowerCase();
     const score = words.reduce((s, w) =>
       s + (allText.includes(w) ? (item.keywords.some(k => k.includes(w)) ? 3 : 1) : 0), 0);
     return { ...item, score };
   }).filter(i => i.score > 0).sort((a, b) => b.score - a.score);
 
-  if (!scored.length) {
-    resultsEl.innerHTML = '<div class="empty"><div class="icon">😕</div>ไม่พบข้อมูลที่ตรงกัน<br>ลองพิมพ์ด้วยคำอื่น เช่น "ราวด์" "OPD" "conference" "lecture"</div>';
-    return;
-  }
-  resultsEl.innerHTML = scored.map(item => `
-    <div class="card">
-      <div class="card-tag">${escapeHtml(item.tag)}</div>
-      <div class="card-answer">${highlight(item.answer, query)}</div>
-    </div>
-  `).join('');
+  renderAccordion(scored, query);
+  // auto-open matched items when searching
+  document.querySelectorAll('.acc-item').forEach(el => el.classList.add('open'));
 }
+
+// ---- Language ----
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btn-th').classList.toggle('active', lang === 'th');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+  const t = LANG[lang];
+  document.getElementById('header-title').textContent = t.headerTitle;
+  document.getElementById('header-sub').textContent = t.headerSub;
+  document.getElementById('notice-banner').innerHTML = t.notice;
+  document.getElementById('q').placeholder = t.placeholder;
+  document.getElementById('search-btn').textContent = t.searchBtn;
+  document.getElementById('rb-title').textContent = t.rbTitle;
+  document.getElementById('rb-desc').innerHTML = t.rbDesc;
+  const rbBtn = document.getElementById('rb-btn');
+  rbBtn.href = t.rbUrl;
+  rbBtn.textContent = t.rbBtn;
+
+  document.getElementById('q').value = '';
+  document.getElementById('clear-btn').style.display = 'none';
+  searchActive = false;
+  renderAccordion(DOC[lang], '');
+}
+
+// ---- Init ----
+
+document.getElementById('q').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+
+// Show reflection banner for last item open
+document.getElementById('accordion').addEventListener('click', () => {
+  const lastTag = DOC[currentLang][DOC[currentLang].length - 1].tag;
+  const items = document.querySelectorAll('.acc-item');
+  const lastOpen = [...items].some((el, i) => i === items.length - 1 && el.classList.contains('open'));
+  document.getElementById('rb').style.display = lastOpen ? 'flex' : 'none';
+});
+
+renderAccordion(DOC['th'], '');
 </script>
 </body>
 </html>
